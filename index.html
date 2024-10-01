@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamiento de Desconexiones y Conexiones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .available {
+            background-color: #c8e6c9;
+        }
+
+        .unavailable {
+            background-color: #ffcdd2;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .observations {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sistema de Agendamiento de Desconexiones y Conexiones</h1>
+
+    <table id="schedule">
+        <thead>
+            <tr>
+                <th>Día</th>
+                <th>Delegación 1</th>
+                <th>Delegación 2</th>
+                <th>Delegación 3</th>
+                <th>Delegación 4</th>
+                <th>Delegación 5</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody id="schedule-body">
+            <!-- Filas generadas dinámicamente por JavaScript -->
+        </tbody>
+    </table>
+
+    <div>
+        <button class="button" onclick="addRow()">Agregar Día</button>
+    </div>
+
+    <script>
+        // Función para agregar una fila para un nuevo día
+        function addRow() {
+            const table = document.getElementById("schedule-body");
+
+            const row = document.createElement("tr");
+
+            // Columna para el día
+            const dayCell = document.createElement("td");
+            const dayInput = document.createElement("input");
+            dayInput.type = "text";
+            dayInput.placeholder = "Ingrese día (Ej: Lunes)";
+            dayCell.appendChild(dayInput);
+            row.appendChild(dayCell);
+
+            // Delegaciones (5 delegaciones)
+            for (let i = 0; i < 5; i++) {
+                const cell = document.createElement("td");
+                const select = document.createElement("select");
+                select.innerHTML = `
+                    <option value="disponible">Disponible</option>
+                    <option value="no disponible">No disponible</option>
+                `;
+                select.onchange = function() {
+                    cell.className = select.value === "disponible" ? "available" : "unavailable";
+                };
+                cell.appendChild(select);
+                row.appendChild(cell);
+            }
+
+            // Columna de observaciones
+            const obsCell = document.createElement("td");
+            const obsInput = document.createElement("input");
+            obsInput.type = "text";
+            obsInput.placeholder = "Observaciones";
+            obsCell.appendChild(obsInput);
+            row.appendChild(obsCell);
+
+            table.appendChild(row);
+        }
+    </script>
+
+</body>
+</html>
